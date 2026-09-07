@@ -1,0 +1,17 @@
+[project]
+name = "ai-resume-screening"
+version = "0.1.0"
+description = "AI Resume Screening & Ranking System"
+requires-python = ">=3.10"
+dependencies = [
+    "pypdf>=5.0.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+    "google-genai>=1.0.0",
+    "pytest>=8.0.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

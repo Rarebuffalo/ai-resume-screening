@@ -1,0 +1,36 @@
+%PDF-1.4
+1 0 obj <</Type /Catalog /Pages 2 0 R>> endobj
+2 0 obj <</Type /Pages /Kids [3 0 R] /Count 1>> endobj
+3 0 obj <</Type /Page /Parent 2 0 R /Resources <</Font <</F1 4 0 R>>>> /MediaBox [0 0 612 792] /Contents 5 0 R>> endobj
+4 0 obj <</Type /Font /Subtype /Type1 /BaseFont /Helvetica>> endobj
+5 0 obj <</Length 884>> stream
+BT
+/F1 11 Tf
+50 750 Td (Dev Patel) Tj -50 -750 Td
+50 734 Td (dev.patel@example.com | github.com/dev-backend) Tj -50 -734 Td
+50 718 Td () Tj -50 -718 Td
+50 702 Td (PROFESSIONAL PROFILE) Tj -50 -702 Td
+50 686 Td (Backend developer focusing on relational databases and asynchronous job queues.) Tj -50 -686 Td
+50 670 Td () Tj -50 -670 Td
+50 654 Td (SKILLS) Tj -50 -654 Td
+50 638 Td (Python, Django, PostgreSQL, Redis, Celery, Docker, Linux) Tj -50 -638 Td
+50 622 Td () Tj -50 -622 Td
+50 606 Td (PROJECTS) Tj -50 -606 Td
+50 590 Td (Scalable E-Commerce Backend Service) Tj -50 -590 Td
+50 574 Td (- Built modular Django REST APIs with PostgreSQL database indexing and optimization.) Tj -50 -574 Td
+50 558 Td (- Integrated Celery workers and Redis queue for background email notifications.) Tj -50 -558 Td
+50 542 Td (- Containerized application stack using Docker Compose.) Tj -50 -542 Td
+ET
+endstream endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000056 00000 n 
+0000000111 00000 n 
+0000000231 00000 n 
+0000000299 00000 n 
+trailer <</Size 6 /Root 1 0 R>>
+startxref
+1232
+%%EOF

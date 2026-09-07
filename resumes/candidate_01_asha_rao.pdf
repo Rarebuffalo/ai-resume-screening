@@ -1,0 +1,40 @@
+%PDF-1.4
+1 0 obj <</Type /Catalog /Pages 2 0 R>> endobj
+2 0 obj <</Type /Pages /Kids [3 0 R] /Count 1>> endobj
+3 0 obj <</Type /Page /Parent 2 0 R /Resources <</Font <</F1 4 0 R>>>> /MediaBox [0 0 612 792] /Contents 5 0 R>> endobj
+4 0 obj <</Type /Font /Subtype /Type1 /BaseFont /Helvetica>> endobj
+5 0 obj <</Length 1386>> stream
+BT
+/F1 11 Tf
+50 750 Td (Asha Rao) Tj -50 -750 Td
+50 734 Td (asha.rao@example.com | github.com/asharao | Bangalore, India) Tj -50 -734 Td
+50 718 Td () Tj -50 -718 Td
+50 702 Td (SUMMARY) Tj -50 -702 Td
+50 686 Td (Software engineering intern specializing in Python backend architecture and stateful AI agents.) Tj -50 -686 Td
+50 670 Td () Tj -50 -670 Td
+50 654 Td (TECHNICAL SKILLS) Tj -50 -654 Td
+50 638 Td (Languages: Python, SQL) Tj -50 -638 Td
+50 622 Td (Backend & Frameworks: FastAPI, AsyncIO, PostgreSQL, Redis, SQLAlchemy, Celery) Tj -50 -622 Td
+50 606 Td (AI & Agentic Systems: LangGraph, LangChain, Multi-Agent, Tool Calling, Vector Search, ChromaDB) Tj -50 -606 Td
+50 590 Td (Cloud & DevOps: Docker, GCP, CI/CD, Pytest) Tj -50 -590 Td
+50 574 Td () Tj -50 -574 Td
+50 558 Td (PROJECTS) Tj -50 -558 Td
+50 542 Td (Autonomous Customer Support Agent \(Python, FastAPI, LangGraph, Redis, GCP\)) Tj -50 -542 Td
+50 526 Td (- Architected a stateful multi-agent system using LangGraph and tool calling for incident routing.) Tj -50 -526 Td
+50 510 Td (- Integrated ChromaDB vector store with hybrid retrieval and evaluation pipelines.) Tj -50 -510 Td
+50 494 Td (- Engineered async FastAPI backend with PostgreSQL persistence and Redis distributed caching.) Tj -50 -494 Td
+50 478 Td (- Deployed containerized services on GCP Cloud Run with automated Pytest CI/CD workflows.) Tj -50 -478 Td
+ET
+endstream endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000056 00000 n 
+0000000111 00000 n 
+0000000231 00000 n 
+0000000299 00000 n 
+trailer <</Size 6 /Root 1 0 R>>
+startxref
+1735
+%%EOF

@@ -1,0 +1,37 @@
+%PDF-1.4
+1 0 obj <</Type /Catalog /Pages 2 0 R>> endobj
+2 0 obj <</Type /Pages /Kids [3 0 R] /Count 1>> endobj
+3 0 obj <</Type /Page /Parent 2 0 R /Resources <</Font <</F1 4 0 R>>>> /MediaBox [0 0 612 792] /Contents 5 0 R>> endobj
+4 0 obj <</Type /Font /Subtype /Type1 /BaseFont /Helvetica>> endobj
+5 0 obj <</Length 983>> stream
+BT
+/F1 11 Tf
+50 750 Td (Rahul Sharma) Tj -50 -750 Td
+50 734 Td (rahul.sharma@example.com | github.com/rahul-ai) Tj -50 -734 Td
+50 718 Td () Tj -50 -718 Td
+50 702 Td (EDUCATION) Tj -50 -702 Td
+50 686 Td (B.Tech in Computer Science) Tj -50 -686 Td
+50 670 Td () Tj -50 -670 Td
+50 654 Td (SKILLS) Tj -50 -654 Td
+50 638 Td (Python, FastAPI, LlamaIndex, RAG, ChromaDB, PostgreSQL, Docker, Pytest) Tj -50 -638 Td
+50 622 Td () Tj -50 -622 Td
+50 606 Td (EXPERIENCE & PROJECTS) Tj -50 -606 Td
+50 590 Td (Enterprise Document Search RAG Pipeline) Tj -50 -590 Td
+50 574 Td (- Developed a Retrieval-Augmented Generation \(RAG\) system with LlamaIndex and ChromaDB.) Tj -50 -574 Td
+50 558 Td (- Built REST API using Python FastAPI with PostgreSQL metadata storage.) Tj -50 -558 Td
+50 542 Td (- Containerized application with Docker for seamless local deployment.) Tj -50 -542 Td
+50 526 Td (- Implemented unit tests with Pytest covering embedding generation and retrieval queries.) Tj -50 -526 Td
+ET
+endstream endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000056 00000 n 
+0000000111 00000 n 
+0000000231 00000 n 
+0000000299 00000 n 
+trailer <</Size 6 /Root 1 0 R>>
+startxref
+1331
+%%EOF
