@@ -1,8 +1,8 @@
 {
   "batch_summary": {
-    "total_resumes": 8,
-    "successfully_parsed": 7,
-    "eligible": 5,
+    "total_resumes": 9,
+    "successfully_parsed": 8,
+    "eligible": 6,
     "rejected": 3,
     "failed_or_unreadable": 1,
     "duplicates": 0
@@ -61,6 +61,54 @@
     },
     {
       "rank": 2,
+      "candidate_name": "Kiran Patel",
+      "file_name": "candidate_09_kiran_patel.docx",
+      "eligible": true,
+      "rejection_reasons": [],
+      "total_score": 79,
+      "score_breakdown": {
+        "ai_project_depth": 28,
+        "python_backend": 30,
+        "cloud_fullstack": 12,
+        "github": 5,
+        "engineering_depth": 4,
+        "penalties_applied": 0,
+        "evidence_map": {
+          "ai_project_depth": "Evidence of vector embeddings and document retrieval pipeline.",
+          "python_backend": "Backend engineering stack: Python project implementation + Async FastAPI in project + PostgreSQL & Redis datastores in project (30/30).",
+          "cloud_fullstack": "Docker containerization, Cloud infrastructure (AWS), CI/CD or orchestration (12/15).",
+          "github": "Active profile (5/5 activity); 0 relevant/maintained Python/AI repo(s) (0/5 repos).",
+          "engineering_depth": "Automated testing with Pytest; Caching strategies; Concurrency & observability (4/5)."
+        }
+      },
+      "matched_skills": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "AsyncIO",
+        "LlamaIndex",
+        "RAG",
+        "Vector Search",
+        "Tool Calling",
+        "ChromaDB",
+        "Docker",
+        "AWS",
+        "CI/CD",
+        "Pytest",
+        "Caching"
+      ],
+      "project_summary": "Implemented a Retrieval-Augmented Generation (RAG) pipeline with vector database integration. Backed by custom backend engineering.",
+      "github_summary": "Active profile (5/5 activity); 0 relevant/maintained Python/AI repo(s) (0/5 repos).",
+      "strengths": [
+        "Practical experience with vector search and RAG retrieval pipelines",
+        "Strong async backend engineering with FastAPI and relational/caching datastores",
+        "Hands-on containerization and cloud deployment exposure"
+      ],
+      "concerns": []
+    },
+    {
+      "rank": 3,
       "candidate_name": "Rahul Sharma",
       "file_name": "candidate_02_rahul_sharma.pdf",
       "eligible": true,
@@ -102,7 +150,7 @@
       "concerns": []
     },
     {
-      "rank": 3,
+      "rank": 4,
       "candidate_name": "Kavita Verma",
       "file_name": "candidate_05_kavita_verma.pdf",
       "eligible": true,
@@ -147,7 +195,7 @@
       "concerns": []
     },
     {
-      "rank": 4,
+      "rank": 5,
       "candidate_name": "Arjun Gupta",
       "file_name": "candidate_06_arjun_gupta.pdf",
       "eligible": true,
@@ -182,7 +230,7 @@
       ]
     },
     {
-      "rank": 5,
+      "rank": 6,
       "candidate_name": "Sam Wilson",
       "file_name": "candidate_07_sam_wilson.pdf",
       "eligible": true,
