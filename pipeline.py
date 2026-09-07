@@ -7,7 +7,7 @@ from models import (
     BatchSummary,
     ScreeningOutput
 )
-from parsers import parse_pdf
+from parsers import parse_pdf, parse_docx
 from extractor import extract_candidate_info
 from eligibility import check_eligibility
 from llm_client import analyze_candidate_projects
@@ -27,10 +27,13 @@ def process_resume_batch(input_dir: Path) -> ScreeningOutput:
     if not input_dir.exists() or not input_dir.is_dir():
         raise FileNotFoundError(f"Input directory does not exist: {input_dir}")
 
-    # Discover all PDF files (case-insensitive)
-    pdf_files = sorted([p for p in input_dir.iterdir() if p.suffix.lower() == ".pdf"])
+    # Discover all supported resume files (PDF and DOCX, case-insensitive)
+    resume_files = sorted([
+        p for p in input_dir.iterdir()
+        if p.is_file() and p.suffix.lower() in (".pdf", ".docx")
+    ])
     
-    total_resumes = len(pdf_files)
+    total_resumes = len(resume_files)
     successfully_parsed = 0
     failed_or_unreadable = 0
     duplicates_count = 0
@@ -39,10 +42,13 @@ def process_resume_batch(input_dir: Path) -> ScreeningOutput:
     eligible_results: List[CandidateResult] = []
     rejected_results: List[CandidateResult] = []
 
-    for file_path in pdf_files:
+    for file_path in resume_files:
         try:
-            # 1. Resilient PDF Parsing
-            candidate = parse_pdf(file_path)
+            # 1. Resilient Document Parsing (PDF or DOCX)
+            if file_path.suffix.lower() == ".docx":
+                candidate = parse_docx(file_path)
+            else:
+                candidate = parse_pdf(file_path)
             
             if candidate.parse_error:
                 failed_or_unreadable += 1
