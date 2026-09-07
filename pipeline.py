@@ -14,6 +14,9 @@ from llm_client import analyze_candidate_projects
 from github_client import enrich_github_profile
 from scorer import compute_candidate_score
 
+import hashlib
+import re
+
 logger = logging.getLogger(__name__)
 
 def process_resume_batch(input_dir: Path) -> ScreeningOutput:
@@ -30,6 +33,8 @@ def process_resume_batch(input_dir: Path) -> ScreeningOutput:
     total_resumes = len(pdf_files)
     successfully_parsed = 0
     failed_or_unreadable = 0
+    duplicates_count = 0
+    seen_hashes: dict[str, str] = {}
     
     eligible_results: List[CandidateResult] = []
     rejected_results: List[CandidateResult] = []
@@ -50,12 +55,29 @@ def process_resume_batch(input_dir: Path) -> ScreeningOutput:
                 ))
                 continue
 
+            # 2. SHA-256 Duplicate Resume Detection
+            norm_text = re.sub(r"\s+", " ", candidate.raw_text).strip().lower()
+            text_hash = hashlib.sha256(norm_text.encode("utf-8")).hexdigest()
+
+            if text_hash in seen_hashes:
+                orig_file = seen_hashes[text_hash]
+                duplicates_count += 1
+                rejected_results.append(CandidateResult(
+                    candidate_name=candidate.name,
+                    file_name=candidate.file_name,
+                    eligible=False,
+                    rejection_reasons=[f"Duplicate resume detected; identical to {orig_file}"],
+                    matched_skills=[]
+                ))
+                continue
+
+            seen_hashes[text_hash] = candidate.file_name
             successfully_parsed += 1
 
-            # 2. Information & Skills Extraction
+            # 3. Information & Skills Extraction
             candidate = extract_candidate_info(candidate)
 
-            # 3. Deterministic Eligibility Check
+            # 4. Deterministic Eligibility Check
             eligibility = check_eligibility(candidate)
 
             if not eligibility.is_eligible:
@@ -123,7 +145,8 @@ def process_resume_batch(input_dir: Path) -> ScreeningOutput:
         successfully_parsed=successfully_parsed,
         eligible=len(eligible_results),
         rejected=len(rejected_results),
-        failed_or_unreadable=failed_or_unreadable
+        failed_or_unreadable=failed_or_unreadable,
+        duplicates=duplicates_count
     )
 
     return ScreeningOutput(

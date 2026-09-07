@@ -72,6 +72,7 @@ class BatchSummary(BaseModel):
     eligible: int = 0
     rejected: int = 0
     failed_or_unreadable: int = 0
+    duplicates: int = 0
 
 class ScreeningOutput(BaseModel):
     batch_summary: BatchSummary

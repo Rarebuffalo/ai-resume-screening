@@ -2,45 +2,48 @@ from typing import Tuple, Dict, List
 from config import settings
 from models import ExtractedCandidate, LLMAnalysisResult, GitHubResult, ScoreBreakdown
 
+import re
+from extractor import extract_project_sections
+
 def score_ai_depth(candidate: ExtractedCandidate, llm_result: LLMAnalysisResult) -> Tuple[int, str]:
     """
     Score AI / Agentic / RAG Project Depth (0–40).
     Rewards real AI systems: agents, RAG, tools, retrieval, state, orchestration, and evaluation.
-    Keyword-only mentions without project evidence are capped at 5 points.
+    Keyword-only mentions in skills without project evidence are capped at 5 points.
     """
     matched = set(candidate.matched_skills)
     
     # Check project analysis level from semantic analysis
     ai_projects = [p for p in llm_result.projects if p.is_ai_related or p.ai_depth_level != "none"]
     primary_project = ai_projects[0] if ai_projects else None
-    
     depth_level = primary_project.ai_depth_level if primary_project else "none"
     
-    # Advanced: Autonomous Agents / Multi-Agent / LangGraph / Tool Calling
-    if depth_level == "autonomous_agent" or {"LangGraph", "Multi-Agent", "Tool Calling", "CrewAI", "AutoGen"}.intersection(matched):
+    # 1. Advanced: Autonomous Agents / Multi-Agent / LangGraph / Tool Calling demonstrated in projects
+    if depth_level == "autonomous_agent":
         score = 36
         if "LangGraph" in matched and "Tool Calling" in matched:
             score = 40
         evidence = primary_project.evidence if primary_project and primary_project.evidence else "Demonstrated stateful agentic workflows with tool calling and multi-agent coordination."
         return score, evidence
 
-    # Intermediate: Practical RAG / Vector DB / Embeddings / LlamaIndex
-    if depth_level == "rag_retrieval" or {"RAG", "LlamaIndex", "Vector Search", "ChromaDB", "Pinecone", "Qdrant", "Weaviate"}.intersection(matched):
+    # 2. Intermediate: Practical RAG / Vector DB / Embeddings / LlamaIndex in projects
+    if depth_level == "rag_retrieval":
         score = 26
         if {"ChromaDB", "Pinecone", "Qdrant"}.intersection(matched):
             score = 28
         evidence = primary_project.evidence if primary_project and primary_project.evidence else "Practical RAG pipeline implementation with vector search and document retrieval."
         return score, evidence
 
-    # Basic: LangChain / Basic API / Prompt Chaining
-    if depth_level == "basic_api" or "LangChain" in matched or "OpenAI API" in matched:
+    # 3. Basic: LangChain / Basic API / Prompt Chaining in projects
+    if depth_level == "basic_api":
         score = 15
         evidence = primary_project.evidence if primary_project and primary_project.evidence else "LLM integration using prompt templates and API completions."
         return score, evidence
 
-    # Low / Keyword-only mention
-    if {"Embeddings"}.intersection(matched):
-        return 8, "Basic embeddings or LLM references identified without deep architectural context."
+    # 4. Skills-only framework mentions with NO meaningful project evidence
+    ai_skills = {"LangGraph", "LangChain", "LlamaIndex", "CrewAI", "AutoGen", "RAG", "Vector Search", "ChromaDB", "Pinecone", "OpenAI API"}.intersection(matched)
+    if ai_skills:
+        return 5, f"AI framework(s) listed in skills ({', '.join(sorted(ai_skills))}) without meaningful project architecture evidence (capped at 5/40)."
 
     return 0, "No significant AI/agentic project architecture identified."
 
@@ -48,9 +51,10 @@ def score_python_backend(candidate: ExtractedCandidate) -> Tuple[int, str]:
     """
     Score Python & Backend Engineering (0–30).
     Rewards Python, FastAPI, async programming, PostgreSQL, Redis in projects/internships
-    over keyword-only skill lists.
+    over keyword-only skill lists. Project evidence carries primary weight.
     """
     matched = set(candidate.matched_skills)
+    proj_text_lower = extract_project_sections(candidate.raw_text).lower()
     
     has_fastapi = "FastAPI" in matched
     has_async = "AsyncIO" in matched
@@ -59,38 +63,68 @@ def score_python_backend(candidate: ExtractedCandidate) -> Tuple[int, str]:
     has_sql = "SQLAlchemy" in matched
     has_flask_django = "Flask" in matched or "Django" in matched
     
+    # Check project-level confirmation
+    fastapi_in_proj = "fastapi" in proj_text_lower
+    async_in_proj = "asyncio" in proj_text_lower or "async " in proj_text_lower
+    postgres_in_proj = "postgres" in proj_text_lower or "postgresql" in proj_text_lower
+    redis_in_proj = "redis" in proj_text_lower
+    sql_in_proj = "sqlalchemy" in proj_text_lower or "sql" in proj_text_lower
+    flask_django_in_proj = "flask" in proj_text_lower or "django" in proj_text_lower
+    py_in_proj = "python" in proj_text_lower
+
     score = 0
     evidence_parts = []
     
-    # Base Python score
-    if "Python" in matched:
+    # 1. Base Python
+    if py_in_proj:
         score += 8
-        evidence_parts.append("Python core")
-
-    # FastAPI & Async ecosystem
-    if has_fastapi and has_async:
-        score += 12
-        evidence_parts.append("Async FastAPI backend")
-    elif has_fastapi:
-        score += 10
-        evidence_parts.append("FastAPI API development")
-    elif has_flask_django:
-        score += 7
-        evidence_parts.append("Flask/Django web framework")
-
-    # Relational & Caching datastores
-    if has_postgres and has_redis:
-        score += 10
-        evidence_parts.append("PostgreSQL & Redis datastores")
-    elif has_postgres:
-        score += 6
-        evidence_parts.append("PostgreSQL datastore")
-    elif has_redis:
+        evidence_parts.append("Python project implementation")
+    elif "Python" in matched:
         score += 5
-        evidence_parts.append("Redis caching")
-    elif has_sql:
+        evidence_parts.append("Python skill listed")
+
+    # 2. FastAPI & Async ecosystem (project evidence vs skills-only)
+    if fastapi_in_proj and (async_in_proj or has_async):
+        score += 12
+        evidence_parts.append("Async FastAPI in project")
+    elif fastapi_in_proj:
+        score += 10
+        evidence_parts.append("FastAPI in project")
+    elif flask_django_in_proj:
+        score += 7
+        evidence_parts.append("Flask/Django in project")
+    elif has_fastapi:
         score += 4
-        evidence_parts.append("SQLAlchemy ORM")
+        evidence_parts.append("FastAPI (skills-only)")
+    elif has_flask_django:
+        score += 3
+        evidence_parts.append("Flask/Django (skills-only)")
+
+    # 3. Relational & Caching datastores (project evidence vs skills-only)
+    if postgres_in_proj and redis_in_proj:
+        score += 10
+        evidence_parts.append("PostgreSQL & Redis datastores in project")
+    elif postgres_in_proj:
+        score += 6
+        evidence_parts.append("PostgreSQL in project")
+    elif redis_in_proj:
+        score += 5
+        evidence_parts.append("Redis in project")
+    elif sql_in_proj:
+        score += 4
+        evidence_parts.append("SQLAlchemy in project")
+    elif has_postgres and has_redis:
+        score += 4
+        evidence_parts.append("PostgreSQL & Redis (skills-only)")
+    elif has_postgres:
+        score += 2
+        evidence_parts.append("PostgreSQL (skills-only)")
+    elif has_redis:
+        score += 2
+        evidence_parts.append("Redis (skills-only)")
+    elif has_sql:
+        score += 2
+        evidence_parts.append("SQLAlchemy (skills-only)")
 
     final_score = min(settings.WEIGHT_PYTHON_BACKEND, score)
     evidence = " + ".join(evidence_parts) if evidence_parts else "Basic Python fundamentals"

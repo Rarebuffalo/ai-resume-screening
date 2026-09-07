@@ -20,17 +20,13 @@ def fallback_heuristic_analysis(candidate: ExtractedCandidate) -> LLMAnalysisRes
     strengths: List[str] = []
     concerns: List[str] = []
 
-    # Detect AI Depth Level & Architecture
-    is_autonomous = bool(
-        {"LangGraph", "Multi-Agent", "Tool Calling", "CrewAI", "AutoGen"}.intersection(matched) or
-        re.search(r"\b(?:multi[\s-]agent|langgraph|agentic\s+workflow|autonomous\s+agent)\b", text_lower)
-    )
-    is_rag = bool(
-        {"RAG", "LlamaIndex", "ChromaDB", "Pinecone", "Qdrant", "Weaviate", "Vector Search", "Embeddings"}.intersection(matched) or
-        re.search(r"\b(?:rag|retrieval[\s-]augmented|vector\s+search|embeddings?)\b", text_lower)
-    )
-    is_langchain = "LangChain" in matched or "langchain" in text_lower
-    is_basic_api = "OpenAI API" in matched or re.search(r"\b(?:openai\s+api|gpt-?\d?[\s-]api|llm\s+api\s+call)\b", text_lower)
+    proj_text_lower = extract_project_sections(candidate.raw_text).lower()
+
+    # Detect AI Depth Level & Architecture from project text
+    is_autonomous = bool(re.search(r"\b(?:multi[\s-]agent|langgraph|agentic\s+workflow|autonomous\s+agent|tool[\s-]calling|crewai|autogen)\b", proj_text_lower))
+    is_rag = bool(re.search(r"\b(?:rag|retrieval[\s-]augmented|vector\s+search|embeddings?|llamaindex|chromadb|pinecone|qdrant|weaviate)\b", proj_text_lower))
+    is_langchain = "langchain" in proj_text_lower
+    is_basic_api = bool(re.search(r"\b(?:openai\s+api|gpt-?\d?[\s-]api|llm\s+api\s+call|openai)\b", proj_text_lower))
 
     # Detect Thin Wrapper
     # Indicators: mentions openai/api call, but has NO rag, no vector store, no state, no tools, no fastapi/async backend

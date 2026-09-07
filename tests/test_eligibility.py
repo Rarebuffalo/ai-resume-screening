@@ -63,3 +63,26 @@ def test_mixed_stack_with_python_and_ai_remains_eligible():
     result = check_eligibility(candidate)
     assert result.is_eligible is True
     assert len(result.rejection_reasons) == 0
+
+def test_reject_bare_langchain_keyword_in_skills_without_project():
+    """Skills: Python, LangChain with no meaningful AI project/implementation -> must NOT pass AI eligibility."""
+    candidate = ExtractedCandidate(
+        file_name="test_bare_keyword.pdf",
+        name="Frank White",
+        matched_skills=["Python", "LangChain"],
+        raw_text="""
+        Frank White
+        frank@example.com
+        SKILLS
+        Python, LangChain, HTML, CSS
+        PROJECTS
+        Personal Portfolio Website
+        - Developed a personal static portfolio site using HTML and CSS.
+        - Built Python script to parse personal financial spreadsheets.
+        """
+    )
+    result = check_eligibility(candidate)
+    assert result.is_eligible is False
+    assert "No AI/agentic project evidence" in result.rejection_reasons
+    assert result.has_python_evidence is True
+    assert result.has_ai_evidence is False

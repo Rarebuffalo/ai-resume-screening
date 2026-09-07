@@ -24,6 +24,7 @@ def print_cli_summary(screening_output: ScreeningOutput) -> None:
     print(f" Eligible Candidates:      {summary.eligible}")
     print(f" Rejected Candidates:      {summary.rejected}")
     print(f" Failed / Unreadable:      {summary.failed_or_unreadable}")
+    print(f" Duplicates Detected:      {summary.duplicates}")
     print("-" * 80)
 
     print("\n[RANKED ELIGIBLE CANDIDATES]")

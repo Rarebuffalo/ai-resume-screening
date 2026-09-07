@@ -35,3 +35,28 @@ def test_contact_info_extraction():
 
     name = extract_candidate_name(sample_text, "candidate_asha.pdf")
     assert name == "Asha Rao"
+
+def test_duplicate_resume_detection(tmp_path):
+    """Verifies that duplicate resumes with different filenames are detected and only scored once."""
+    from generate_sample_resumes import create_pdf
+    from pipeline import process_resume_batch
+
+    lines = [
+        "Asha Rao",
+        "asha@example.com",
+        "SKILLS: Python, FastAPI, LangGraph, PostgreSQL",
+        "PROJECTS: Autonomous agent pipeline using LangGraph and Python FastAPI."
+    ]
+    
+    file1 = tmp_path / "resume_1.pdf"
+    file2 = tmp_path / "resume_1_copy.pdf"
+    create_pdf(file1, lines)
+    create_pdf(file2, lines)
+
+    results = process_resume_batch(tmp_path)
+    assert results.batch_summary.total_resumes == 2
+    assert results.batch_summary.duplicates == 1
+    assert results.batch_summary.eligible == 1
+    assert len(results.ranked_candidates) == 1
+    assert results.ranked_candidates[0].candidate_name == "Asha Rao"
+    assert any("Duplicate resume detected" in r for cand in results.rejected_candidates for r in cand.rejection_reasons)

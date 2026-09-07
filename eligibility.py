@@ -37,20 +37,24 @@ def evaluate_python_evidence(candidate: ExtractedCandidate) -> Tuple[bool, str]:
 
     return False, "No evidence of Python stack found in skills, projects, or experience."
 
+from extractor import extract_project_sections
+
 def evaluate_ai_evidence(candidate: ExtractedCandidate) -> Tuple[bool, str]:
     """
     Evaluates whether the candidate has meaningful AI/LLM/RAG/agentic evidence.
-    Requires at least one recognized AI framework, RAG pipeline, agentic workflow,
-    vector database, or tool-calling system.
+    Requires genuine project or implementation evidence. A single bare AI keyword
+    (e.g., 'LangChain' or 'OpenAI API') in a skills section without project context is rejected.
     """
     matched = set(candidate.matched_skills)
     found_indicators = matched.intersection(AI_INDICATORS)
     
-    if found_indicators:
-        return True, f"AI/agentic project and framework evidence identified: {', '.join(sorted(found_indicators))}."
+    if not found_indicators:
+        return False, "No AI/agentic project evidence (LangChain, LangGraph, RAG, vector search, or agents)."
 
-    # Contextual check in text for terms like 'retrieval-augmented', 'agentic workflow', 'tool calling'
     text_lower = candidate.raw_text.lower()
+    proj_text_lower = extract_project_sections(candidate.raw_text).lower()
+
+    # 1. Custom explicit architectural patterns anywhere in text
     custom_ai_patterns = [
         (r"\b(?:retrieval[\s-]augmented[\s-]generation|rag\s+pipeline)\b", "RAG pipeline implementation"),
         (r"\b(?:agentic\s+workflow|autonomous\s+agent|multi[\s-]agent)\b", "Agentic / multi-agent workflow"),
@@ -63,7 +67,18 @@ def evaluate_ai_evidence(candidate: ExtractedCandidate) -> Tuple[bool, str]:
         if re.search(pattern, text_lower):
             return True, f"Meaningful AI implementation found: {description}."
 
-    return False, "No AI/agentic project evidence (LangChain, LangGraph, RAG, vector search, or agents)."
+    # 2. Check if any AI indicator appears inside project / experience sections
+    proj_ai_found = [ind for ind in found_indicators if re.search(r"\b" + re.escape(ind.lower()) + r"\b", proj_text_lower)]
+    if proj_ai_found:
+        return True, f"AI/agentic project implementation identified: {', '.join(sorted(proj_ai_found))}."
+
+    # 3. Multiple cooperating AI indicators together across profile (e.g. LangChain + RAG, LangGraph + Tool Calling)
+    if len(found_indicators) >= 2:
+        return True, f"Multiple AI/agentic technologies identified across profile: {', '.join(sorted(found_indicators))}."
+
+    # 4. If only 1 AI indicator was found and it only appears in skills context (not in projects)
+    single_ind = list(found_indicators)[0]
+    return False, f"Single AI keyword ('{single_ind}') in skills list without meaningful project or implementation context."
 
 def check_eligibility(candidate: ExtractedCandidate) -> EligibilityResult:
     """

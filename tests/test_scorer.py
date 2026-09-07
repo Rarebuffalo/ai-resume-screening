@@ -11,7 +11,14 @@ def test_score_bounds_clamped_0_to_100():
             "Docker", "GCP", "Kubernetes", "CI/CD", "React", "Next.js",
             "Pytest", "Caching", "Message Queues", "Observability"
         ],
-        raw_text="Full expert engineering stack across all categories."
+        raw_text="""
+        SKILLS: Python, FastAPI, AsyncIO, PostgreSQL, Redis, LangGraph, Tool Calling, Docker, GCP, Pytest
+        PROJECTS:
+        Super Agent Architecture
+        - Architected autonomous multi-agent system using LangGraph and tool calling.
+        - Built async FastAPI backend with PostgreSQL and Redis distributed caching in Python.
+        - Deployed with Docker on GCP with Pytest test suites and CI/CD observability.
+        """
     )
     llm_result = LLMAnalysisResult(
         projects=[
@@ -83,3 +90,53 @@ def test_tutorial_penalty_deduction():
     penalties, reasons = calculate_penalties(llm_result)
     assert penalties >= 5
     assert any("Tutorial project penalty" in r for r in reasons)
+
+def test_crewai_in_skills_without_project_does_not_receive_top_ai_score():
+    """Skills: CrewAI + shallow/non-AI project evidence must NOT receive 36-40 points."""
+    from scorer import score_ai_depth
+    candidate = ExtractedCandidate(
+        file_name="crewai_skills_only.pdf",
+        name="George White",
+        matched_skills=["Python", "CrewAI"],
+        raw_text="""
+        SKILLS: Python, CrewAI, Git
+        PROJECTS:
+        Personal Expense Tracker
+        Built a simple desktop app using Python and Tkinter to track monthly expenses.
+        """
+    )
+    # Semantic analysis indicates no AI project / none
+    llm_result = LLMAnalysisResult(
+        projects=[
+            ProjectAnalysis(
+                title="Personal Expense Tracker",
+                ai_depth_level="none",
+                is_ai_related=False,
+                evidence="Desktop expense tracker without AI."
+            )
+        ]
+    )
+    score, evidence = score_ai_depth(candidate, llm_result)
+    assert score <= 5
+    assert score < 36
+    assert "capped at 5/40" in evidence
+
+def test_python_backend_skills_only_does_not_receive_max_score():
+    """Skills: Python, FastAPI, PostgreSQL, Redis without project evidence must NOT receive 30/30."""
+    from scorer import score_python_backend
+    candidate = ExtractedCandidate(
+        file_name="backend_skills_only.pdf",
+        name="Hannah Green",
+        matched_skills=["Python", "FastAPI", "PostgreSQL", "Redis"],
+        raw_text="""
+        SKILLS: Python, FastAPI, PostgreSQL, Redis, HTML, CSS
+        EXPERIENCE & PROJECTS:
+        Front-end Web Intern
+        - Designed company marketing landing pages using HTML and CSS.
+        - Wrote Python automation scripts to convert CSV data.
+        """
+    )
+    score, evidence = score_python_backend(candidate)
+    assert score < 30
+    assert score <= 18
+    assert "skills-only" in evidence.lower()
