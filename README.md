@@ -1,19 +1,19 @@
 # AI Resume Screening & Ranking System
 
-A production-minded, CLI-first Python system that ingests a directory of candidate resumes in PDF format, applies deterministic hard eligibility filters, scores eligible candidates across engineering and AI depth dimensions, enriches profiles with public GitHub activity, and produces an explainable, ranked shortlist in machine-readable JSON.
+A production-minded, CLI-first Python system that ingests a directory of candidate resumes in PDF and DOCX format, applies deterministic hard eligibility filters, scores eligible candidates across engineering and AI depth dimensions, enriches profiles with public GitHub activity, and produces an explainable, ranked shortlist in machine-readable JSON.
 
 ---
 
 ## 1. Project Overview & Architecture
 
-The system processes resumes in a sequential, fault-isolated pipeline where failures on any individual resume (corrupt PDF, LLM timeout, GitHub rate limit) never crash the batch.
+The system processes resumes in a sequential, fault-isolated pipeline where failures on any individual resume (corrupt PDF/DOCX, LLM timeout, GitHub rate limit) never crash the batch.
 
 ```
-Input Directory (*.pdf)
+Input Directory (*.pdf, *.docx)
        │
        ▼
-1. PDF Parsing (parsers.py - pypdf)
-   - Resilient text extraction
+1. Document Parsing (parsers.py - pypdf & python-docx)
+   - Resilient text extraction from PDF pages, DOCX paragraphs & tables
    - Isolated exception boundaries
        │
        ▼
@@ -212,7 +212,7 @@ source .venv/bin/activate
 pytest -v
 ```
 
-All 19 focused tests cover:
+All 23 focused tests cover:
 - Python + AI eligible candidates
 - Python-only rejection
 - AI-only rejection
@@ -221,6 +221,8 @@ All 19 focused tests cover:
 - Tutorial clone penalty deduction (-5 pts)
 - Score clamping [0, 100]
 - Parser resilience on corrupt and empty PDF files
+- Parser resilience on valid, corrupt, and empty DOCX files (paragraphs and tables)
+- Automated pipeline discovery and processing of mixed PDF and DOCX batches
 - Graceful handling of GitHub 404, 403 (rate limits), and network timeouts
 
 ---
