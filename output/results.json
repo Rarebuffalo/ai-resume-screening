@@ -1,0 +1,286 @@
+{
+  "batch_summary": {
+    "total_resumes": 8,
+    "successfully_parsed": 7,
+    "eligible": 5,
+    "rejected": 3,
+    "failed_or_unreadable": 1,
+    "duplicates": 0
+  },
+  "ranked_candidates": [
+    {
+      "rank": 1,
+      "candidate_name": "Asha Rao",
+      "file_name": "candidate_01_asha_rao.pdf",
+      "eligible": true,
+      "rejection_reasons": [],
+      "total_score": 89,
+      "score_breakdown": {
+        "ai_project_depth": 40,
+        "python_backend": 30,
+        "cloud_fullstack": 12,
+        "github": 2,
+        "engineering_depth": 5,
+        "penalties_applied": 0,
+        "evidence_map": {
+          "ai_project_depth": "Identified stateful or agentic orchestration in candidate profile (e.g. LangGraph / Multi-Agent / Tool Calling).",
+          "python_backend": "Backend engineering stack: Python project implementation + Async FastAPI in project + PostgreSQL & Redis datastores in project (30/30).",
+          "cloud_fullstack": "Docker containerization, Cloud infrastructure (GCP), CI/CD or orchestration (12/15).",
+          "github": "Active profile (1/5 activity); 0 relevant/maintained Python/AI repo(s) (1/5 repos).",
+          "engineering_depth": "Automated testing with Pytest; Caching strategies; Asynchronous task queues; Concurrency & observability (5/5)."
+        }
+      },
+      "matched_skills": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "SQLAlchemy",
+        "AsyncIO",
+        "Celery",
+        "LangChain",
+        "LangGraph",
+        "Vector Search",
+        "Tool Calling",
+        "Multi-Agent",
+        "ChromaDB",
+        "Docker",
+        "GCP",
+        "CI/CD",
+        "Pytest",
+        "Caching"
+      ],
+      "project_summary": "Architected a multi-agent / stateful agentic system with tool calling and orchestration. Backed by custom backend engineering.",
+      "github_summary": "Active profile (1/5 activity); 0 relevant/maintained Python/AI repo(s) (1/5 repos).",
+      "strengths": [
+        "Demonstrates practical multi-agent / agentic workflow architecture",
+        "Strong async backend engineering with FastAPI and relational/caching datastores",
+        "Hands-on containerization and cloud deployment exposure"
+      ],
+      "concerns": []
+    },
+    {
+      "rank": 2,
+      "candidate_name": "Rahul Sharma",
+      "file_name": "candidate_02_rahul_sharma.pdf",
+      "eligible": true,
+      "rejection_reasons": [],
+      "total_score": 65,
+      "score_breakdown": {
+        "ai_project_depth": 28,
+        "python_backend": 24,
+        "cloud_fullstack": 5,
+        "github": 6,
+        "engineering_depth": 2,
+        "penalties_applied": 0,
+        "evidence_map": {
+          "ai_project_depth": "Evidence of vector embeddings and document retrieval pipeline.",
+          "python_backend": "Backend engineering stack: Python project implementation + FastAPI in project + PostgreSQL in project (24/30).",
+          "cloud_fullstack": "Docker containerization (5/15).",
+          "github": "Active profile (5/5 activity); 0 relevant/maintained Python/AI repo(s) (1/5 repos).",
+          "engineering_depth": "Automated testing with Pytest (2/5)."
+        }
+      },
+      "matched_skills": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "LlamaIndex",
+        "RAG",
+        "Embeddings",
+        "ChromaDB",
+        "Docker",
+        "Pytest"
+      ],
+      "project_summary": "Implemented a Retrieval-Augmented Generation (RAG) pipeline with vector database integration. Backed by custom backend engineering.",
+      "github_summary": "Active profile (5/5 activity); 0 relevant/maintained Python/AI repo(s) (1/5 repos).",
+      "strengths": [
+        "Practical experience with vector search and RAG retrieval pipelines",
+        "Strong async backend engineering with FastAPI and relational/caching datastores",
+        "Hands-on containerization and cloud deployment exposure"
+      ],
+      "concerns": []
+    },
+    {
+      "rank": 3,
+      "candidate_name": "Kavita Verma",
+      "file_name": "candidate_05_kavita_verma.pdf",
+      "eligible": true,
+      "rejection_reasons": [],
+      "total_score": 60,
+      "score_breakdown": {
+        "ai_project_depth": 26,
+        "python_backend": 20,
+        "cloud_fullstack": 13,
+        "github": 1,
+        "engineering_depth": 0,
+        "penalties_applied": 0,
+        "evidence_map": {
+          "ai_project_depth": "Evidence of vector embeddings and document retrieval pipeline.",
+          "python_backend": "Backend engineering stack: Python project implementation + FastAPI in project + PostgreSQL (skills-only) (20/30).",
+          "cloud_fullstack": "Docker containerization, Cloud infrastructure (GCP), Modern frontend integration (Next.js, React, TypeScript) (13/15).",
+          "github": "Active profile (1/5 activity); 0 relevant/maintained Python/AI repo(s) (0/5 repos).",
+          "engineering_depth": "Standard implementation patterns (0/5)."
+        }
+      },
+      "matched_skills": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "LangChain",
+        "RAG",
+        "Docker",
+        "GCP",
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Java",
+        "Spring Boot"
+      ],
+      "project_summary": "Implemented a Retrieval-Augmented Generation (RAG) pipeline with vector database integration. Backed by custom backend engineering.",
+      "github_summary": "Active profile (1/5 activity); 0 relevant/maintained Python/AI repo(s) (0/5 repos).",
+      "strengths": [
+        "Practical experience with vector search and RAG retrieval pipelines",
+        "Strong async backend engineering with FastAPI and relational/caching datastores",
+        "Hands-on containerization and cloud deployment exposure"
+      ],
+      "concerns": []
+    },
+    {
+      "rank": 4,
+      "candidate_name": "Arjun Gupta",
+      "file_name": "candidate_06_arjun_gupta.pdf",
+      "eligible": true,
+      "rejection_reasons": [],
+      "total_score": 17,
+      "score_breakdown": {
+        "ai_project_depth": 15,
+        "python_backend": 12,
+        "cloud_fullstack": 0,
+        "github": 0,
+        "engineering_depth": 0,
+        "penalties_applied": 10,
+        "evidence_map": {
+          "ai_project_depth": "Uses LLM API calls with standard prompt templates.",
+          "python_backend": "Backend engineering stack: Python skill listed + Flask/Django in project (12/30).",
+          "cloud_fullstack": "No deployment/full-stack signals detected (0/15).",
+          "github": "No GitHub profile found on resume",
+          "engineering_depth": "Standard implementation patterns (0/5).",
+          "penalties": "Thin LLM/API wrapper penalty (-10 pts): superficial API call without orchestration/retrieval/state."
+        }
+      },
+      "matched_skills": [
+        "Python",
+        "Flask",
+        "OpenAI API"
+      ],
+      "project_summary": "Integrated LLM API completions and prompt chaining.",
+      "github_summary": "No GitHub profile found on resume",
+      "strengths": [],
+      "concerns": [
+        "AI project appears to be a thin LLM API wrapper lacking custom orchestration or data pipelines"
+      ]
+    },
+    {
+      "rank": 5,
+      "candidate_name": "Sam Wilson",
+      "file_name": "candidate_07_sam_wilson.pdf",
+      "eligible": true,
+      "rejection_reasons": [],
+      "total_score": 5,
+      "score_breakdown": {
+        "ai_project_depth": 5,
+        "python_backend": 5,
+        "cloud_fullstack": 0,
+        "github": 0,
+        "engineering_depth": 0,
+        "penalties_applied": 5,
+        "evidence_map": {
+          "ai_project_depth": "AI framework(s) listed in skills (LangChain, OpenAI API) without meaningful project architecture evidence (capped at 5/40).",
+          "python_backend": "Backend engineering stack: Python skill listed (5/30).",
+          "cloud_fullstack": "No deployment/full-stack signals detected (0/15).",
+          "github": "No GitHub profile found on resume",
+          "engineering_depth": "Standard implementation patterns (0/5).",
+          "penalties": "Tutorial project penalty (-5 pts): project appears to be a standard generic tutorial clone."
+        }
+      },
+      "matched_skills": [
+        "Python",
+        "LangChain",
+        "OpenAI API"
+      ],
+      "project_summary": "Standard software engineering project.",
+      "github_summary": "No GitHub profile found on resume",
+      "strengths": [],
+      "concerns": [
+        "Python usage appears limited to scripts or data tasks rather than production backend APIs",
+        "Project shows characteristics of standard tutorial/coursework exercises"
+      ]
+    }
+  ],
+  "rejected_candidates": [
+    {
+      "rank": null,
+      "candidate_name": "Dev Patel",
+      "file_name": "candidate_03_dev_patel.pdf",
+      "eligible": false,
+      "rejection_reasons": [
+        "No AI/agentic project evidence"
+      ],
+      "total_score": null,
+      "score_breakdown": null,
+      "matched_skills": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "Redis",
+        "Celery",
+        "Docker"
+      ],
+      "project_summary": "",
+      "github_summary": "",
+      "strengths": [],
+      "concerns": []
+    },
+    {
+      "rank": null,
+      "candidate_name": "Priya Nair",
+      "file_name": "candidate_04_priya_nair.pdf",
+      "eligible": false,
+      "rejection_reasons": [
+        "No evidence of Python stack"
+      ],
+      "total_score": null,
+      "score_breakdown": null,
+      "matched_skills": [
+        "LangChain",
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Node.js",
+        "Java",
+        "Spring Boot"
+      ],
+      "project_summary": "",
+      "github_summary": "",
+      "strengths": [],
+      "concerns": []
+    },
+    {
+      "rank": null,
+      "candidate_name": "Unknown Candidate",
+      "file_name": "candidate_08_corrupt.pdf",
+      "eligible": false,
+      "rejection_reasons": [
+        "Unreadable file: PDF parsing error: PdfReadError: startxref not found"
+      ],
+      "total_score": null,
+      "score_breakdown": null,
+      "matched_skills": [],
+      "project_summary": "",
+      "github_summary": "",
+      "strengths": [],
+      "concerns": []
+    }
+  ]
+}

@@ -135,7 +135,8 @@ The output is written to `results.json` matching the assignment specification:
     "successfully_parsed": 7,
     "eligible": 5,
     "rejected": 3,
-    "failed_or_unreadable": 1
+    "failed_or_unreadable": 1,
+    "duplicates": 0
   },
   "ranked_candidates": [
     {
@@ -211,7 +212,7 @@ source .venv/bin/activate
 pytest -v
 ```
 
-All 15 focused tests cover:
+All 19 focused tests cover:
 - Python + AI eligible candidates
 - Python-only rejection
 - AI-only rejection
