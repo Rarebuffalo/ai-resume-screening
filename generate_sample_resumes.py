@@ -46,7 +46,7 @@ startxref
     with open(file_path, "wb") as f:
         f.write((header + obj1 + obj2 + obj3 + obj4 + obj5 + xref).encode("latin1"))
 
-def generate_all_samples(target_dir: Path):
+def generate_all_samples(target_dir: Path, include_docx: bool = True):
     target_dir.mkdir(parents=True, exist_ok=True)
 
     # 1. Asha Rao - Top Candidate: Strong Python, FastAPI, LangGraph, Tools, GCP, Redis, Testing
@@ -174,7 +174,58 @@ def generate_all_samples(target_dir: Path):
     with open(corrupt_path, "wb") as f:
         f.write(b"%PDF-1.4\nBROKEN_CORRUPT_DATA_NOT_A_VALID_OBJECT_STREAM\n%%EOF")
 
-    print(f"Generated 8 sample test resumes in '{target_dir}'.")
+    # 9. Kiran Patel - Representative DOCX Candidate (Python, FastAPI, LlamaIndex, RAG, AWS)
+    if include_docx:
+        create_docx(
+            target_dir / "candidate_09_kiran_patel.docx",
+            lines=[
+                "Kiran Patel",
+                "kiran.patel@example.com | github.com/kiran-ai | Pune, India",
+                "## PROFESSIONAL SUMMARY",
+                "AI Systems Engineer with expertise in Python backend architectures and RAG pipelines.",
+                "## TECHNICAL SKILLS",
+                "Languages: Python, SQL",
+                "Backend Frameworks: FastAPI, AsyncIO, PostgreSQL, Redis",
+                "AI & LLM Stack: LlamaIndex, Vector Search, ChromaDB, RAG, Tool Calling",
+                "Cloud & DevOps: Docker, AWS, Pytest, CI/CD",
+                "## RECENT PROJECTS",
+                "Autonomous Document RAG Engine (Python, FastAPI, LlamaIndex, ChromaDB)",
+                "- Architected a Retrieval-Augmented Generation (RAG) system with ChromaDB vector search and LlamaIndex orchestration.",
+                "- Engineered high-throughput async FastAPI REST API with PostgreSQL persistence and Redis caching.",
+                "- Containerized microservices using Docker and deployed on AWS with automated Pytest suites."
+            ],
+            table_data=[
+                ["Core Domain", "Technologies Used"],
+                ["AI / Retrieval", "LlamaIndex, RAG, ChromaDB, Vector Search"],
+                ["Backend / Cloud", "Python, FastAPI, PostgreSQL, Redis, Docker, AWS"]
+            ]
+        )
+        print(f"Generated sample test resumes (8 PDFs + 1 DOCX) in '{target_dir}'.")
+    else:
+        print(f"Generated 8 sample test resumes in '{target_dir}'.")
+
+def create_docx(file_path: Path, lines: list[str], table_data: list[list[str]] | None = None) -> None:
+    """Generates a representative DOCX resume document."""
+    import docx
+    doc = docx.Document()
+    for line in lines:
+        if line.startswith("# "):
+            doc.add_heading(line[2:], level=1)
+        elif line.startswith("## "):
+            doc.add_heading(line[3:], level=2)
+        elif line.strip() == "":
+            continue
+        else:
+            doc.add_paragraph(line)
+
+    if table_data:
+        table = doc.add_table(rows=len(table_data), cols=len(table_data[0]))
+        for r_idx, row in enumerate(table_data):
+            for c_idx, cell in enumerate(row):
+                table.cell(r_idx, c_idx).text = cell
+
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+    doc.save(str(file_path))
 
 if __name__ == "__main__":
     generate_all_samples(Path("./resumes"))
